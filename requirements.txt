@@ -1,0 +1,9 @@
+# torch/torchvision are installed separately (GPU or CPU build), see Dockerfile / README.
+numpy==2.5.3
+opencv-python-headless==5.0.0.93
+pillow==12.3.0
+pymupdf==1.28.2
+fastapi==0.141.1
+pydantic==2.13.5
+uvicorn==0.54.0
+python-multipart==0.0.32

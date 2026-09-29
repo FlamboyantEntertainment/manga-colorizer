@@ -1,0 +1,21 @@
+# NVIDIA GPU:  docker compose up -d
+# CPU only:    change the image tag to :cpu and delete the "deploy" section.
+services:
+  manga-colorizer:
+    image: ghcr.io/flamboyantentertainment/manga-colorizer:latest
+    container_name: manga-colorizer
+    ports:
+      - "7860:7860"
+    volumes:
+      - models:/models
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  models:
