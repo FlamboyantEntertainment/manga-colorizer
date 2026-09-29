@@ -89,9 +89,13 @@ For CPU only, edit the file first: use the `:cpu` tag and delete the `deploy:` s
 
 This uses [manga-colorization-v2](https://github.com/qweasdd/manga-colorization-v2), a fast, lightweight model. Results are pleasant, soft, anime-style color, not hand-colored quality. Each page is colored on its own, so a character's hair or clothes may change color between pages. The tone controls help you get a consistent overall look.
 
-A full four-page story with the default settings. Notice the blonde girl's hair looks pinkish on page 2: that's the page-to-page drift described above.
+A full four-page story with the default settings:
 
 ![Four colorized pages of Go Go! Encyclopedia Girls](docs/pages.jpg)
+
+**Page-to-page consistency**, up close: the same girl is golden blonde on page 1, but in page 2's big close-up her hair turns peach with pink strands. In page 2's smaller panels she's blonde again, so colors can drift even within a page, most often in large close-ups.
+
+![Page 1 and page 2 side by side, with zoomed crops of the same character showing her hair shift from golden blonde to peach-pink](docs/consistency.jpg)
 
 ## Troubleshooting
 
