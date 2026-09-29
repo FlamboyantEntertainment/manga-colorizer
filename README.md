@@ -7,6 +7,8 @@
 
 ![Before and after: a black-and-white manga page and the same page colorized](docs/before-after.jpg)
 
+![Three consecutive manga pages: black-and-white originals on top, the same pages colorized with the Natural preset below](docs/three-pages.jpg)
+
 <p align="center"><img src="docs/screenshot.jpg" alt="The web UI: tone controls on the left, a live before/after preview on the right" width="720"></p>
 
 ## Features
