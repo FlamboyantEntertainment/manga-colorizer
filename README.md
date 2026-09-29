@@ -5,7 +5,9 @@
 [![CI](https://github.com/FlamboyantEntertainment/manga-colorizer/actions/workflows/ci.yml/badge.svg)](https://github.com/FlamboyantEntertainment/manga-colorizer/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-<!-- TODO: add docs/screenshot.png (the UI) and docs/before-after.jpg (use pages you have the right to show) -->
+![Before and after: a black-and-white manga page and the same page colorized](docs/before-after.jpg)
+
+<p align="center"><img src="docs/screenshot.jpg" alt="The web UI: tone controls on the left, a live before/after preview on the right" width="720"></p>
 
 ## Features
 
@@ -75,9 +77,21 @@ For CPU only, edit the file first: use the `:cpu` tag and delete the `deploy:` s
 
 **Reset to defaults** restores everything; double-click any slider to reset just that one.
 
+**Presets** on the same page:
+
+![The same panel in the original and with the Natural, Vivid, Soft, Warm vintage and Cool presets](docs/presets.jpg)
+
+**Detail**: higher values give small areas such as collars and braids their own color, at the cost of speed:
+
+![The same panel at Detail 576, 768 and 1024](docs/detail.jpg)
+
 ## What to expect
 
 This uses [manga-colorization-v2](https://github.com/qweasdd/manga-colorization-v2), a fast, lightweight model. Results are pleasant, soft, anime-style color, not hand-colored quality. Each page is colored on its own, so a character's hair or clothes may change color between pages. The tone controls help you get a consistent overall look.
+
+A full four-page story with the default settings. Notice the blonde girl's hair looks pinkish on page 2: that's the page-to-page drift described above.
+
+![Four colorized pages of Go Go! Encyclopedia Girls](docs/pages.jpg)
 
 ## Troubleshooting
 
@@ -102,5 +116,6 @@ For CPU-only machines, change the PyTorch index URL in `pyproject.toml` to `http
 - The colorization model and network code are [manga-colorization-v2](https://github.com/qweasdd/manga-colorization-v2) by qweasdd. The weights are downloaded on first run from the mirror published by [manga-image-translator](https://github.com/zyddnys/manga-image-translator); they are not included in this repository or the Docker images.
 - The network code in `mc2/` was adapted from manga-image-translator (GPL-3.0).
 - This project is licensed under the [GNU GPL v3.0](LICENSE).
+- The demo images in `docs/` are colorized versions of [*Go Go! Encyclopedia Girls*](https://commons.wikimedia.org/wiki/File:Go_Go!_Encyclopedia_Girls_-_English_01.png) (pages 1–4), art by Kasuga, English version by Masatami, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The colorized images in `docs/` are shared under the same license.
 
 Please only colorize books you have the right to use, and respect the creators whose work you enjoy.
