@@ -23,5 +23,7 @@ jobs:
       - name: Install (CPU PyTorch)
         run: |
           pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cpu
-          pip install -r requirements.txt pytest
+          pip install -r requirements.txt pytest httpx2
       - run: pytest -q
+      - name: Extension tests
+        run: node --test tests/js/*.test.mjs
