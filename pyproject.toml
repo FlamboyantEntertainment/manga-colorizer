@@ -1,6 +1,6 @@
 [project]
 name = "manga-colorizer"
-version = "0.1.0"
+version = "0.2.0"
 description = "Self-hosted AI colorizer for whole manga books (PDF, EPUB, CBZ) with a drag-and-drop web UI"
 license = "GPL-3.0-or-later"
 requires-python = "==3.12.*"

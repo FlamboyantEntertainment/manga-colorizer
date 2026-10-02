@@ -4,6 +4,8 @@ All notable changes to this project are listed here. The format follows [Keep a 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-02
+
 ### Added
 
 - Browser extension (Brave/Chrome, load unpacked from `extension/`) that colorizes manga pages in place while you read on a website. It turns on per site, colors pages shortly before they scroll into view, and can flip back to the originals.
@@ -34,5 +36,6 @@ All notable changes to this project are listed here. The format follows [Keep a 
 - Skips already-colored pages and small images.
 - Docker images for NVIDIA GPUs (`:latest`) and CPU (`:cpu`).
 
-[Unreleased]: https://github.com/FlamboyantEntertainment/manga-colorizer/compare/b1...HEAD
+[Unreleased]: https://github.com/FlamboyantEntertainment/manga-colorizer/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/FlamboyantEntertainment/manga-colorizer/compare/b1...v0.2.0
 [0.1.0]: https://github.com/FlamboyantEntertainment/manga-colorizer/releases/tag/b1
