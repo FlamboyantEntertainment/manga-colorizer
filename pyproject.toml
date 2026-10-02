@@ -5,8 +5,8 @@ description = "Self-hosted AI colorizer for whole manga books (PDF, EPUB, CBZ) w
 license = "GPL-3.0-or-later"
 requires-python = "==3.12.*"
 dependencies = [
-    "torch==2.11.0",
-    "torchvision==0.26.0",
+    "torch==2.13.0",
+    "torchvision==0.28.0",
     "numpy==2.5.3",
     "opencv-python-headless==5.0.0.93",
     "pillow==12.3.0",
@@ -25,11 +25,13 @@ dev = [
 
 [tool.uv]
 package = false
+# torch pulls in setuptools; older versions have PYSEC-2026-3447.
+constraint-dependencies = ["setuptools>=83"]
 
 # Local runs use the CUDA 12.8 build of PyTorch. For CPU-only, change the URL to .../whl/cpu
 [[tool.uv.index]]
 name = "pytorch"
-url = "https://download.pytorch.org/whl/cu128"
+url = "https://download.pytorch.org/whl/cu130"
 explicit = true
 
 [tool.uv.sources]

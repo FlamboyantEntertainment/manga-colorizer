@@ -7,3 +7,5 @@ fastapi==0.141.1
 pydantic==2.13.5
 uvicorn==0.54.0
 python-multipart==0.0.32
+# torch pulls in setuptools; older versions have PYSEC-2026-3447.
+setuptools>=83

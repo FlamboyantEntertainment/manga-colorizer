@@ -102,7 +102,7 @@ A full four-page story with the default settings:
 
 ## Troubleshooting
 
-- **The status line says "CPU" but I have an NVIDIA GPU.** Make sure you used `--gpus all`. On Linux, install the NVIDIA Container Toolkit. Check with `docker run --rm --gpus all ubuntu nvidia-smi`.
+- **The status line says "CPU" but I have an NVIDIA GPU.** Make sure you used `--gpus all`. On Linux, install the NVIDIA Container Toolkit. Check with `docker run --rm --gpus all ubuntu nvidia-smi`. The GPU image needs an RTX 20-series or newer card and NVIDIA driver 580 or newer; `nvidia-smi` shows your driver version.
 - **The model failed to download.** The first start needs internet access to GitHub. Restart the container to retry.
 - **Port 7860 is already in use.** Change the first number, for example `-p 8080:7860`, then open http://localhost:8080. The browser extension always looks for the server on port 7860, so it won't work on another port.
 - **The extension popup says "Server offline".** Start the server (the Docker container or `./run.sh`) and reopen the popup. Pages marked "server offline" stay queued and are colored once it is back.
