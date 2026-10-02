@@ -24,6 +24,10 @@ PREVIEW_MAX_SIDE = 900
 SAMPLE_MAX_SIDE = 1400
 SAMPLE_PAGES_KEPT = 6  # per-draft preview pages held in memory
 NO_STORE = {"Cache-Control": "no-store"}
+MAX_UPLOAD_BYTES = 25 * 1024 * 1024
+MAX_PIXELS = 40_000_000
+MIN_COLORIZE_SIDE = 256  # the model needs at least this much on the short side
+COLORIZE_JPEG_QUALITY = 90
 
 
 class Settings(BaseModel):
@@ -165,6 +169,27 @@ def health() -> dict:
     return model_status
 
 
+@app.post("/api/colorize")
+def colorize_image(file: UploadFile = File(...), settings: Settings = Depends()) -> Response:
+    """One page image in, the colored page out. Used by the browser extension."""
+    data = file.file.read(MAX_UPLOAD_BYTES + 1)
+    if len(data) > MAX_UPLOAD_BYTES:
+        raise HTTPException(413, "Image is larger than 25 MB")
+    image = _open_image(data)
+    if model_status["state"] == "error":
+        raise HTTPException(500, f"Model failed to load: {model_status['error']}")
+    if model_status["state"] != "ready":
+        raise HTTPException(503, "Model is still loading")
+    colorizer = _GpuLockedColorizer(_get_colorizer())
+    options = settings.to_options()
+    if min(image.size) < MIN_COLORIZE_SIDE or (options.skip_colored and colorizer.is_already_colored(image)):
+        return Response(status_code=204)
+    colored = colorizer.colorize(image, size=options.size, denoise_sigma=options.denoise_sigma, tone=options.tone)
+    buffer = io.BytesIO()
+    colored.convert("RGB").save(buffer, "JPEG", quality=COLORIZE_JPEG_QUALITY)
+    return Response(buffer.getvalue(), media_type="image/jpeg", headers=NO_STORE)
+
+
 @app.post("/api/jobs")
 def upload(file: UploadFile = File(...)) -> dict:
     name = Path(file.filename or "book").name
@@ -300,6 +325,22 @@ def _jpeg(image: Image.Image, max_side: int) -> bytes:
     buffer = io.BytesIO()
     thumb.convert("RGB").save(buffer, "JPEG", quality=88)
     return buffer.getvalue()
+
+
+def _open_image(data: bytes) -> Image.Image:
+    try:
+        image = Image.open(io.BytesIO(data))
+    except Image.DecompressionBombError:
+        raise HTTPException(413, "Image has too many pixels")
+    except Exception:
+        raise HTTPException(422, "Not a readable image")
+    if image.width * image.height > MAX_PIXELS:
+        raise HTTPException(413, "Image is larger than 40 megapixels")
+    try:
+        image.load()
+    except Exception:
+        raise HTTPException(422, "Not a readable image")
+    return image
 
 
 def _find(job_id: str) -> Job:

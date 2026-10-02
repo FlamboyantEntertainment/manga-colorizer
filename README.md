@@ -17,6 +17,7 @@
 - **Sharp linework.** The AI colors a small copy of each page, then only the color is transferred onto your original full-resolution page. Lines and screentone stay as crisp as the source.
 - **Live preview.** Tune the look on any page of the book with a before/after slider before you commit.
 - **Tone controls.** Color strength, warmth, hue shift and "clean whites" (removes the tint on paper and speech bubbles), plus presets.
+- **Browser extension.** Colors manga pages in place as you read on a website, with the same presets and sliders as the web UI.
 - **Smart skipping.** Already-colored pages such as covers are left alone, and so are small images like icons.
 - **Light on hardware.** Runs on 8 GB NVIDIA GPUs at about 0.5 s per page, and also works on CPU (about 10–20 s per page, so a 200-page volume takes about an hour).
 
@@ -115,13 +116,46 @@ cd manga-colorizer
 ./run.sh
 ```
 
-For CPU-only machines, change the PyTorch index URL in `pyproject.toml` to `https://download.pytorch.org/whl/cpu` first. Run the tests with `uv run pytest`.
+For CPU-only machines, change the PyTorch index URL in `pyproject.toml` to `https://download.pytorch.org/whl/cpu` first. Run the tests with `uv run pytest` and `node --test tests/js/*.test.mjs`.
+
+## Browser extension
+
+Colorizes manga pages in place while you read on a website. It uses this server at http://127.0.0.1:7860, so keep it running (Docker or `./run.sh`).
+
+1. Open `brave://extensions` (or `chrome://extensions`), turn on **Developer mode**, click **Load unpacked** and pick the `extension/` folder.
+2. Pin the extension, open a chapter, click the icon and tick **Colorize on <site>**. The site is remembered.
+3. Pages are colored a little before they scroll into view. The popup has the same presets and sliders as the web UI (color strength, warmth, hue shift, clean whites, detail, denoise, keep already-colored pages); changing them recolors the pages on screen. **Show originals** flips back to black and white.
+
+![A manga page on a reading site with the extension off (black and white) and on (colorized in place)](docs/extension-reader.jpg)
+
+### Popup settings
+
+<img src="docs/extension-popup.png" alt="The extension popup: server status, per-site toggle, Show originals, the five preset chips, tone sliders, and the Detail, Denoise and Keep already-colored pages controls" width="328" align="right">
+
+The popup carries the same controls as the web UI, and they apply to every site you've turned on:
+
+| Control | What it does |
+|---|---|
+| Presets | Natural, Vivid, Soft, Warm vintage, Cool. The chip for the current look is highlighted. |
+| Color strength, Warmth, Hue shift, Clean whites | Fine-tune the look. |
+| Detail | The resolution the AI works at: Balanced (576), More detail (768) or Max (1024, slower). |
+| Denoise | Cleans JPEG noise before coloring. Raise it for noisy scans; use 0 for clean digital releases. |
+| Keep already-colored pages | Leaves pages that are already in color alone. |
+| Reset | Puts everything back to the defaults. Double-click a slider to reset just that one. |
+
+Pages recolor when you let go of a slider. Colored pages are cached per setting combination, so switching back to a look you just used is instant.
+
+<br clear="right">
+
+Colored pages live only in memory; nothing is saved. Pages drawn into a `<canvas>` or used as CSS backgrounds aren't supported.
+
+To try it locally: `.venv/bin/python tests/extension-page/make_page.py`, then `.venv/bin/python -m http.server 8765 -d tests/extension-page`, and open http://127.0.0.1:8765/.
 
 ## Credits and license
 
 - The colorization model and network code are [manga-colorization-v2](https://github.com/qweasdd/manga-colorization-v2) by qweasdd. The weights are downloaded on first run from the mirror published by [manga-image-translator](https://github.com/zyddnys/manga-image-translator); they are not included in this repository or the Docker images.
 - The network code in `mc2/` was adapted from manga-image-translator (GPL-3.0).
 - This project is licensed under the [GNU GPL v3.0](LICENSE).
-- The demo images in `docs/` are colorized versions of [*Go Go! Encyclopedia Girls*](https://commons.wikimedia.org/wiki/File:Go_Go!_Encyclopedia_Girls_-_English_01.png) (pages 1–4), art by Kasuga, English version by Masatami, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The colorized images in `docs/` are shared under the same license.
+- The demo images in `docs/` (including the extension screenshots) are colorized versions of [*Go Go! Encyclopedia Girls*](https://commons.wikimedia.org/wiki/File:Go_Go!_Encyclopedia_Girls_-_English_01.png) (pages 1–4), art by Kasuga, English version by Masatami, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The colorized images in `docs/` are shared under the same license.
 
 Please only colorize books you have the right to use, and respect the creators whose work you enjoy.

@@ -4,3 +4,5 @@ __pycache__/
 data/
 models/
 .pytest_cache/
+tests/extension-page/*.png
+tests/extension-page/index.html

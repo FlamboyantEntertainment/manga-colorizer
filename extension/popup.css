@@ -1,0 +1,136 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1d1d1f;
+  --muted: #6b6b70;
+  --ok: #1a7f37;
+  --wait: #9a6700;
+  --error: #c62828;
+  --line: #d8d8dc;
+  --accent: #3b5bdb;
+  --on-accent: #ffffff;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1f1f22;
+    --fg: #ececf0;
+    --muted: #a0a0a8;
+    --ok: #4ac26b;
+    --wait: #d4a72c;
+    --error: #ff7b72;
+    --line: #3a3a40;
+    --accent: #8ea2ff;
+    --on-accent: #111114;
+  }
+}
+
+body {
+  width: 300px;
+  margin: 0;
+  padding: 12px 14px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px/1.4 system-ui, sans-serif;
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.status {
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+
+.status.ok { color: var(--ok); }
+.status.wait { color: var(--wait); }
+.status.error { color: var(--error); }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.row select {
+  margin-left: auto;
+}
+
+.note {
+  margin: -4px 0 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 14px 0 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+h2 {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.link {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.chip {
+  padding: 2px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.field {
+  margin: 6px 0;
+}
+
+.field .label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.field output {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.field input[type="range"] {
+  width: 100%;
+  margin: 2px 0 0;
+}
