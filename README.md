@@ -1,6 +1,6 @@
 # Manga Colorizer
 
-**Drop in a black-and-white manga, get it back in color.** A self-hosted web app that AI-colors whole books (PDF, EPUB or CBZ) and gives you back the same format. It runs on your own GPU, with no account, no cloud and no uploads to anyone.
+**Drop in a black-and-white manga, get it back in color.** A self-hosted web app that AI-colors whole books (PDF, EPUB or CBZ) and gives you back the same format, plus a [browser extension](#browser-extension) that colors manga pages in place while you read online. It runs on your own GPU, with no account, no cloud and no uploads to anyone.
 
 [![CI](https://github.com/FlamboyantEntertainment/manga-colorizer/actions/workflows/ci.yml/badge.svg)](https://github.com/FlamboyantEntertainment/manga-colorizer/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
@@ -104,7 +104,9 @@ A full four-page story with the default settings:
 
 - **The status line says "CPU" but I have an NVIDIA GPU.** Make sure you used `--gpus all`. On Linux, install the NVIDIA Container Toolkit. Check with `docker run --rm --gpus all ubuntu nvidia-smi`.
 - **The model failed to download.** The first start needs internet access to GitHub. Restart the container to retry.
-- **Port 7860 is already in use.** Change the first number, for example `-p 8080:7860`, then open http://localhost:8080.
+- **Port 7860 is already in use.** Change the first number, for example `-p 8080:7860`, then open http://localhost:8080. The browser extension always looks for the server on port 7860, so it won't work on another port.
+- **The extension popup says "Server offline".** Start the server (the Docker container or `./run.sh`) and reopen the popup. Pages marked "server offline" stay queued and are colored once it is back.
+- **The extension does nothing on a site.** Tick **Colorize on <site>** in the popup for that site, and reload the tab after updating the extension. Pages drawn into a `<canvas>` can't be colored.
 
 ## Run without Docker
 
@@ -124,7 +126,7 @@ Colorizes manga pages in place while you read on a website. It uses this server 
 
 1. Open `brave://extensions` (or `chrome://extensions`), turn on **Developer mode**, click **Load unpacked** and pick the `extension/` folder.
 2. Pin the extension, open a chapter, click the icon and tick **Colorize on <site>**. The site is remembered.
-3. Pages are colored a little before they scroll into view. The popup has the same presets and sliders as the web UI (color strength, warmth, hue shift, clean whites, detail, denoise, keep already-colored pages); changing them recolors the pages on screen. **Show originals** flips back to black and white.
+3. Pages are colored a little before they scroll into view. **Show originals** flips back to black and white, and the [popup settings](#popup-settings) change the look.
 
 ![A manga page on a reading site with the extension off (black and white) and on (colorized in place)](docs/extension-reader.jpg)
 
@@ -149,7 +151,7 @@ Pages recolor when you let go of a slider. Colored pages are cached per setting 
 
 Colored pages live only in memory; nothing is saved. Pages drawn into a `<canvas>` or used as CSS backgrounds aren't supported.
 
-To try it locally: `.venv/bin/python tests/extension-page/make_page.py`, then `.venv/bin/python -m http.server 8765 -d tests/extension-page`, and open http://127.0.0.1:8765/.
+To try it on a local test page: `uv run python tests/extension-page/make_page.py`, then `uv run python -m http.server 8765 -d tests/extension-page`, and open http://127.0.0.1:8765/.
 
 ## Credits and license
 

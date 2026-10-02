@@ -122,7 +122,7 @@ async function showServerStatus() {
       setStatus("error", `Model failed to load: ${health.error}`);
     }
   } catch {
-    setStatus("error", "Server offline. Run ./run.sh in manga-colorizer-repo.");
+    setStatus("error", "Server offline. Start the Manga Colorizer server (Docker or ./run.sh).");
   }
 }
 
