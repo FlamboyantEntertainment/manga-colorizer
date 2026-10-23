@@ -9,7 +9,7 @@ dependencies = [
     "torchvision==0.28.0",
     "numpy==2.5.3",
     "opencv-python-headless==5.0.0.93",
-    "pillow==12.3.0",
+    "pillow==13.0.0",
     "pymupdf==1.28.2",
     "fastapi==0.141.1",
     "pydantic==2.13.5",
